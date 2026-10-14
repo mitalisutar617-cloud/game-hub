@@ -19,28 +19,28 @@ export default function Hero({ featuredGame }: HeroProps) {
   };
 
   return (
-    <section className="relative overflow-hidden pt-12 pb-20 md:pt-16 md:pb-28">
+    <section className="relative overflow-hidden pt-8 pb-12 sm:pt-14 sm:pb-20 md:pt-16 md:pb-28">
       {/* Ambient background glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] md:w-[900px] md:h-[450px] bg-gradient-to-tr from-cyan-600/20 via-indigo-600/15 to-purple-600/20 blur-[130px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 blur-[100px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[600px] md:w-[900px] h-[200px] sm:h-[350px] md:h-[450px] bg-gradient-to-tr from-cyan-600/20 via-indigo-600/15 to-purple-600/20 blur-[100px] sm:blur-[130px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-purple-500/10 blur-[80px] sm:blur-[100px] rounded-full pointer-events-none -z-10" />
 
       {/* Cyber grid overlay */}
-      <div className="absolute inset-0 cyber-grid opacity-40 pointer-events-none -z-10" />
+      <div className="absolute inset-0 cyber-grid opacity-30 sm:opacity-40 pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
           
           {/* Left Column: Headlines & Call to Actions */}
-          <div className="lg:col-span-7 flex flex-col items-start space-y-6 text-left">
+          <div className="lg:col-span-7 flex flex-col items-start space-y-4 sm:space-y-6 text-left w-full">
             
             {/* Live Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold tracking-wider uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] sm:text-xs font-semibold tracking-wider uppercase">
               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
               <span>5 Instant Playable Web Games</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1]">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15] sm:leading-[1.1]">
               PLAY DIRECTLY. <br />
               <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">
                 KEYBOARD & TOUCH.
@@ -48,15 +48,15 @@ export default function Hero({ featuredGame }: HeroProps) {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-lg text-zinc-300 max-w-xl leading-relaxed">
+            <p className="text-sm sm:text-lg text-zinc-300 max-w-xl leading-relaxed">
               Enjoy classic arcade duels and reflex challenges right in your browser. Complete with score tracking, responsive touch controls, and dark theme neon aesthetics.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-2 w-full sm:w-auto">
+            {/* CTA Buttons - Stacked on mobile */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1 sm:pt-2 w-full sm:w-auto">
               <a
                 href="#games-grid"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm text-black bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:shadow-[0_0_30px_rgba(0,240,255,0.7)] transition-all duration-300 active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 min-h-[44px] rounded-xl font-bold text-sm text-black bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:shadow-[0_0_30px_rgba(0,240,255,0.7)] transition-all duration-300 active:scale-95"
               >
                 <span>Browse All 5 Games</span>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,7 +66,7 @@ export default function Hero({ featuredGame }: HeroProps) {
 
               <Link
                 href={`/games/${spotlight.slug}`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-cyan-500/50 transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 min-h-[44px] rounded-xl font-semibold text-sm text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-cyan-500/50 transition-all duration-200"
               >
                 <span>Play {spotlight.title}</span>
                 <span className="text-lg">{spotlight.thumbnail}</span>
@@ -74,18 +74,18 @@ export default function Hero({ featuredGame }: HeroProps) {
             </div>
 
             {/* Quick Metrics Ticker */}
-            <div className="grid grid-cols-3 gap-6 pt-6 border-t border-white/10 w-full max-w-lg">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-5 sm:pt-6 border-t border-white/10 w-full max-w-lg text-center sm:text-left">
               <div>
-                <p className="text-2xl font-black text-white font-mono">5</p>
-                <p className="text-xs text-zinc-400 font-medium uppercase tracking-wider">Playable Games</p>
+                <p className="text-xl sm:text-2xl font-black text-white font-mono">5</p>
+                <p className="text-[10px] sm:text-xs text-zinc-400 font-medium uppercase tracking-wider">Playable Games</p>
               </div>
               <div>
-                <p className="text-2xl font-black text-cyan-400 font-mono">100%</p>
-                <p className="text-xs text-zinc-400 font-medium uppercase tracking-wider">Client-Side</p>
+                <p className="text-xl sm:text-2xl font-black text-cyan-400 font-mono">100%</p>
+                <p className="text-[10px] sm:text-xs text-zinc-400 font-medium uppercase tracking-wider">Client-Side</p>
               </div>
               <div>
-                <p className="text-2xl font-black text-emerald-400 font-mono">0s</p>
-                <p className="text-xs text-zinc-400 font-medium uppercase tracking-wider">Load Time</p>
+                <p className="text-xl sm:text-2xl font-black text-emerald-400 font-mono">0s</p>
+                <p className="text-[10px] sm:text-xs text-zinc-400 font-medium uppercase tracking-wider">Load Time</p>
               </div>
             </div>
 

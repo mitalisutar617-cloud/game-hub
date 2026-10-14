@@ -327,46 +327,72 @@ export default function Snake() {
   }, [snake, food, direction]);
 
   return (
-    <div className="flex flex-col items-center max-w-lg mx-auto p-4 sm:p-6 w-full">
-      {/* Scoreboard Display */}
-      <div className="grid grid-cols-2 gap-4 w-full mb-6">
-        <div className="p-4 rounded-xl bg-[#11141e] border border-cyan-500/30 text-center shadow-[0_0_15px_rgba(0,240,255,0.15)]">
-          <div className="text-xs font-bold text-cyan-400 uppercase tracking-wider">Score</div>
-          <div className="text-3xl font-black text-white font-mono mt-0.5">{score}</div>
+    <div className="flex flex-col items-center max-w-lg mx-auto p-2 sm:p-6 w-full">
+      {/* Scoreboard Display - ABOVE BOARD */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 w-full mb-3 sm:mb-4">
+        <div className="p-3 sm:p-4 rounded-xl bg-[#11141e] border border-cyan-500/30 text-center shadow-[0_0_15px_rgba(0,240,255,0.15)]">
+          <div className="text-[11px] sm:text-xs font-bold text-cyan-400 uppercase tracking-wider">Score</div>
+          <div className="text-2xl sm:text-3xl font-black text-white font-mono mt-0.5">{score}</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#11141e] border border-white/10 text-center">
-          <div className="text-xs font-bold text-emerald-400 uppercase tracking-wider">High Score</div>
-          <div className="text-3xl font-black text-emerald-400 font-mono mt-0.5">{highScore}</div>
+        <div className="p-3 sm:p-4 rounded-xl bg-[#11141e] border border-white/10 text-center">
+          <div className="text-[11px] sm:text-xs font-bold text-emerald-400 uppercase tracking-wider">High Score</div>
+          <div className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono mt-0.5">{highScore}</div>
         </div>
       </div>
 
-      {/* Game Canvas Container */}
-      <div className="relative rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-[#0c0f17]">
+      {/* Restart & Pause Action Buttons - ABOVE BOARD */}
+      <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 w-full">
+        <button
+          onClick={restartGame}
+          className="flex-1 min-h-[44px] py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-cyan-400 hover:bg-cyan-300 text-black shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span>Restart Game (R)</span>
+        </button>
+
+        {hasStarted && !isGameOver && (
+          <button
+            onClick={() => setIsPaused((p) => !p)}
+            className="min-h-[44px] py-2.5 px-4 rounded-xl font-semibold text-xs text-zinc-300 hover:text-white bg-[#141824] border border-white/10 active:scale-95 cursor-pointer"
+          >
+            {isPaused ? "Resume" : "Pause"}
+          </button>
+        )}
+      </div>
+
+      {/* Game Canvas Container - scales to screen width, aspect-square, max-w-full, touch-action: none */}
+      <div
+        className="relative w-full max-w-[400px] aspect-square rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-[#0c0f17] mx-auto select-none"
+        style={{ touchAction: "none" }}
+      >
         <canvas
           ref={canvasRef}
-          width={360}
-          height={360}
+          width={400}
+          height={400}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="block w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 touch-none cursor-pointer"
+          className="block w-full h-full max-w-full aspect-square touch-none cursor-pointer"
+          style={{ touchAction: "none" }}
         />
 
         {/* Start / Game Over / Paused Overlay */}
         {(!hasStarted || isGameOver || isPaused) && (
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center z-10">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-4 sm:p-6 text-center z-10">
             {isGameOver ? (
               <div className="space-y-3">
                 <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30">
                   SYSTEM OVERRIDE // COLLISION
                 </span>
-                <h3 className="text-3xl font-black text-white">Game Over</h3>
-                <p className="text-sm text-zinc-300">
+                <h3 className="text-2xl sm:text-3xl font-black text-white">Game Over</h3>
+                <p className="text-xs sm:text-sm text-zinc-300">
                   Final Energy: <strong className="text-cyan-400 font-mono">{score} pts</strong>
                 </p>
                 <button
                   onClick={restartGame}
-                  className="mt-3 px-6 py-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-bold text-sm shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all active:scale-95"
+                  className="mt-2 px-6 py-3 min-h-[44px] rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-bold text-sm shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all active:scale-95 cursor-pointer"
                 >
                   Play Again (Space)
                 </button>
@@ -377,7 +403,7 @@ export default function Snake() {
                 <p className="text-xs text-zinc-400">Press Space or button below to resume</p>
                 <button
                   onClick={() => setIsPaused(false)}
-                  className="px-6 py-2.5 rounded-xl bg-cyan-400 text-black font-bold text-sm"
+                  className="px-6 py-2.5 min-h-[44px] rounded-xl bg-cyan-400 text-black font-bold text-sm cursor-pointer"
                 >
                   Resume
                 </button>
@@ -385,13 +411,13 @@ export default function Snake() {
             ) : (
               <div className="space-y-3">
                 <span className="text-4xl">🐍</span>
-                <h3 className="text-2xl font-black text-white">Neon Snake</h3>
+                <h3 className="text-xl sm:text-2xl font-black text-white">Neon Snake</h3>
                 <p className="text-xs text-zinc-400 max-w-xs">
                   Consume glowing orbs and expand your cyber snake. Do not hit the perimeter!
                 </p>
                 <button
                   onClick={restartGame}
-                  className="px-6 py-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black font-bold text-sm shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all active:scale-95"
+                  className="px-6 py-3 min-h-[44px] rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black font-bold text-sm shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all active:scale-95 cursor-pointer"
                 >
                   Start Game (Space)
                 </button>
@@ -401,57 +427,35 @@ export default function Snake() {
         )}
       </div>
 
-      {/* Restart & Pause Action Buttons */}
-      <div className="flex items-center gap-3 mt-6 w-full">
-        <button
-          onClick={restartGame}
-          className="flex-1 py-3 px-4 rounded-xl font-bold text-sm bg-cyan-400 hover:bg-cyan-300 text-black shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all active:scale-95 flex items-center justify-center gap-2"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          <span>Restart Game (R)</span>
-        </button>
-
-        {hasStarted && !isGameOver && (
-          <button
-            onClick={() => setIsPaused((p) => !p)}
-            className="py-3 px-4 rounded-xl font-semibold text-xs text-zinc-300 hover:text-white bg-[#141824] border border-white/10"
-          >
-            {isPaused ? "Resume" : "Pause (Space)"}
-          </button>
-        )}
-      </div>
-
-      {/* Touch On-Screen D-Pad Controls for Mobile */}
-      <div className="mt-8 flex flex-col items-center gap-2 sm:hidden">
+      {/* Touch On-Screen D-Pad Controls for Mobile & Touch devices */}
+      <div className="mt-6 flex flex-col items-center gap-2 w-full select-none">
         <span className="text-[10px] text-zinc-500 uppercase tracking-widest font-mono">Touch D-Pad</span>
         <button
           onClick={() => changeDirection("UP")}
           aria-label="Move Up"
-          className="w-14 h-12 rounded-xl bg-[#141824] active:bg-cyan-500 active:text-black border border-white/10 flex items-center justify-center text-xl text-white shadow-md"
+          className="min-h-[48px] min-w-[56px] px-5 py-2.5 rounded-xl bg-[#141824] active:bg-cyan-500 active:text-black border border-white/15 hover:border-cyan-400/40 flex items-center justify-center text-xl text-white shadow-md active:scale-95 transition-all cursor-pointer"
         >
           ▲
         </button>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <button
             onClick={() => changeDirection("LEFT")}
             aria-label="Move Left"
-            className="w-14 h-12 rounded-xl bg-[#141824] active:bg-cyan-500 active:text-black border border-white/10 flex items-center justify-center text-xl text-white shadow-md"
+            className="min-h-[48px] min-w-[56px] px-5 py-2.5 rounded-xl bg-[#141824] active:bg-cyan-500 active:text-black border border-white/15 hover:border-cyan-400/40 flex items-center justify-center text-xl text-white shadow-md active:scale-95 transition-all cursor-pointer"
           >
             ◀
           </button>
           <button
             onClick={() => changeDirection("DOWN")}
             aria-label="Move Down"
-            className="w-14 h-12 rounded-xl bg-[#141824] active:bg-cyan-500 active:text-black border border-white/10 flex items-center justify-center text-xl text-white shadow-md"
+            className="min-h-[48px] min-w-[56px] px-5 py-2.5 rounded-xl bg-[#141824] active:bg-cyan-500 active:text-black border border-white/15 hover:border-cyan-400/40 flex items-center justify-center text-xl text-white shadow-md active:scale-95 transition-all cursor-pointer"
           >
             ▼
           </button>
           <button
             onClick={() => changeDirection("RIGHT")}
             aria-label="Move Right"
-            className="w-14 h-12 rounded-xl bg-[#141824] active:bg-cyan-500 active:text-black border border-white/10 flex items-center justify-center text-xl text-white shadow-md"
+            className="min-h-[48px] min-w-[56px] px-5 py-2.5 rounded-xl bg-[#141824] active:bg-cyan-500 active:text-black border border-white/15 hover:border-cyan-400/40 flex items-center justify-center text-xl text-white shadow-md active:scale-95 transition-all cursor-pointer"
           >
             ▶
           </button>

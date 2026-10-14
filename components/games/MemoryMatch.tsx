@@ -161,32 +161,48 @@ export default function MemoryMatch() {
   const isGameWon = matches === 8;
 
   return (
-    <div className="flex flex-col items-center max-w-lg mx-auto p-4 sm:p-6 w-full">
-      {/* Scoreboard Display */}
-      <div className="grid grid-cols-3 gap-3 w-full mb-6">
-        <div className="p-3.5 rounded-xl bg-[#11141e] border border-cyan-500/30 text-center">
-          <div className="text-[11px] font-bold text-cyan-400 uppercase tracking-wider">Moves</div>
-          <div className="text-2xl font-black text-white font-mono mt-0.5">{moves}</div>
+    <div className="flex flex-col items-center max-w-lg mx-auto p-2 sm:p-6 w-full">
+      {/* Scoreboard Display - ABOVE BOARD */}
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 w-full mb-3 sm:mb-4">
+        <div className="p-2.5 sm:p-3.5 rounded-xl bg-[#11141e] border border-cyan-500/30 text-center">
+          <div className="text-[10px] sm:text-[11px] font-bold text-cyan-400 uppercase tracking-wider">Moves</div>
+          <div className="text-xl sm:text-2xl font-black text-white font-mono mt-0.5">{moves}</div>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-[#11141e] border border-white/10 text-center">
-          <div className="text-[11px] font-bold text-purple-400 uppercase tracking-wider">Matched</div>
-          <div className="text-2xl font-black text-purple-300 font-mono mt-0.5">
+        <div className="p-2.5 sm:p-3.5 rounded-xl bg-[#11141e] border border-white/10 text-center">
+          <div className="text-[10px] sm:text-[11px] font-bold text-purple-400 uppercase tracking-wider">Matched</div>
+          <div className="text-xl sm:text-2xl font-black text-purple-300 font-mono mt-0.5">
             {matches} / 8
           </div>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-[#11141e] border border-white/10 text-center">
-          <div className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">Best</div>
-          <div className="text-2xl font-black text-emerald-400 font-mono mt-0.5">
+        <div className="p-2.5 sm:p-3.5 rounded-xl bg-[#11141e] border border-white/10 text-center">
+          <div className="text-[10px] sm:text-[11px] font-bold text-emerald-400 uppercase tracking-wider">Best</div>
+          <div className="text-xl sm:text-2xl font-black text-emerald-400 font-mono mt-0.5">
             {bestMoves !== null ? `${bestMoves}` : "—"}
           </div>
         </div>
       </div>
 
-      {/* 4x4 Card Matrix */}
-      <div className="relative p-3 rounded-2xl bg-[#0c0f17] border border-white/10 shadow-2xl">
-        <div className="grid grid-cols-4 gap-2.5 sm:gap-3 w-72 sm:w-80 md:w-96">
+      {/* Restart Button - ABOVE BOARD */}
+      <div className="flex items-center gap-3 mb-4 sm:mb-6 w-full">
+        <button
+          onClick={initializeGame}
+          className="w-full min-h-[44px] py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-cyan-400 hover:bg-cyan-300 text-black shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span>Restart & Reshuffle (R)</span>
+        </button>
+      </div>
+
+      {/* 4x4 Card Matrix - Scaled to screen width, aspect-square, touch-action: none */}
+      <div
+        className="relative w-full max-w-[400px] aspect-square p-2 sm:p-3 rounded-2xl bg-[#0c0f17] border border-white/10 shadow-2xl mx-auto touch-none select-none"
+        style={{ touchAction: "none" }}
+      >
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5 w-full h-full aspect-square">
           {cards.map((card, idx) => {
             const isFocused = focusedIndex === idx;
             return (
@@ -199,7 +215,7 @@ export default function MemoryMatch() {
                 }}
                 disabled={card.isFlipped || card.isMatched || isLocked}
                 aria-label={`Card ${idx + 1}, ${card.isMatched ? "matched" : card.isFlipped ? card.icon : "hidden"}`}
-                className={`aspect-square rounded-xl text-3xl sm:text-4xl flex items-center justify-center transition-all select-none duration-300 cursor-pointer ${
+                className={`aspect-square min-h-[44px] min-w-[44px] rounded-xl text-2xl sm:text-4xl flex items-center justify-center transition-all select-none duration-300 cursor-pointer ${
                   card.isMatched
                     ? "bg-emerald-950/60 border border-emerald-500/50 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.3)] scale-95"
                     : card.isFlipped
@@ -210,7 +226,7 @@ export default function MemoryMatch() {
                 {card.isFlipped || card.isMatched ? (
                   <span className="transform transition-transform scale-100">{card.icon}</span>
                 ) : (
-                  <span className="text-sm font-mono text-zinc-600 font-bold">?</span>
+                  <span className="text-xs sm:text-sm font-mono text-zinc-600 font-bold">?</span>
                 )}
               </button>
             );
@@ -219,39 +235,26 @@ export default function MemoryMatch() {
 
         {/* Victory Celebration Modal Overlay */}
         {isGameWon && (
-          <div className="absolute inset-0 bg-black/85 backdrop-blur-md rounded-2xl flex flex-col items-center justify-center p-6 text-center z-20">
-            <span className="text-5xl mb-2 animate-bounce">🏆</span>
+          <div className="absolute inset-0 bg-black/85 backdrop-blur-md rounded-2xl flex flex-col items-center justify-center p-4 sm:p-6 text-center z-20">
+            <span className="text-4xl sm:text-5xl mb-2 animate-bounce">🏆</span>
             <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mb-2">
               NEURAL MATRIX SOLVED
             </span>
-            <h3 className="text-2xl sm:text-3xl font-black text-white">All Pairs Matched!</h3>
-            <p className="text-sm text-zinc-300 mt-1">
+            <h3 className="text-xl sm:text-3xl font-black text-white">All Pairs Matched!</h3>
+            <p className="text-xs sm:text-sm text-zinc-300 mt-1">
               Completed in <strong className="text-cyan-400 font-mono">{moves} moves</strong>.
             </p>
-            <div className="flex items-center gap-1 my-3 text-yellow-400 text-xl">
+            <div className="flex items-center gap-1 my-2 sm:my-3 text-yellow-400 text-lg sm:text-xl">
               {moves <= 16 ? "★★★" : moves <= 24 ? "★★☆" : "★☆☆"}
             </div>
             <button
               onClick={initializeGame}
-              className="mt-2 px-6 py-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-bold text-sm shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all active:scale-95"
+              className="mt-2 px-6 py-3 min-h-[44px] rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-bold text-sm shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all active:scale-95 cursor-pointer"
             >
               Play Again (R)
             </button>
           </div>
         )}
-      </div>
-
-      {/* Restart Button */}
-      <div className="flex items-center gap-3 mt-6 w-full">
-        <button
-          onClick={initializeGame}
-          className="w-full py-3 px-4 rounded-xl font-bold text-sm bg-cyan-400 hover:bg-cyan-300 text-black shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all active:scale-95 flex items-center justify-center gap-2"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          <span>Restart & Reshuffle (R)</span>
-        </button>
       </div>
 
       {/* Control hints */}

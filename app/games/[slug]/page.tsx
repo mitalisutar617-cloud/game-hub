@@ -73,15 +73,15 @@ export default async function GameDetailPage({ params }: GamePageProps) {
   };
 
   return (
-    <div className="flex flex-col flex-1 pb-24">
+    <div className="flex flex-col flex-1 pb-16 sm:pb-24 w-full overflow-x-hidden">
       {/* Top Breadcrumb & Return Bar */}
-      <div className="border-b border-white/10 bg-[#0a0d14]/70 backdrop-blur-md sticky top-20 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between text-xs">
+      <div className="border-b border-white/10 bg-[#0a0d14]/80 backdrop-blur-md sticky top-16 sm:top-20 z-30 w-full">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-3.5 flex items-center justify-between text-xs">
           <Link
             href="/#games-grid"
-            className="inline-flex items-center gap-2 text-zinc-400 hover:text-cyan-400 font-semibold transition-colors"
+            className="inline-flex items-center gap-2 min-h-[44px] text-zinc-400 hover:text-cyan-400 font-semibold transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             <span>Back to Game Vault</span>
@@ -98,41 +98,41 @@ export default async function GameDetailPage({ params }: GamePageProps) {
       </div>
 
       {/* Hero Header Section */}
-      <section className="relative overflow-hidden py-10 sm:py-12 border-b border-white/10 bg-[#0a0c13]">
+      <section className="relative overflow-hidden py-6 sm:py-10 border-b border-white/10 bg-[#0a0c13] w-full">
         {/* Background glow tailored to game gradient */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-gradient-to-r from-cyan-600/15 via-purple-600/15 to-pink-600/15 blur-[120px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[180px] sm:h-[250px] bg-gradient-to-r from-cyan-600/15 via-purple-600/15 to-pink-600/15 blur-[90px] sm:blur-[120px] rounded-full pointer-events-none -z-10" />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center space-y-4">
+        <div className="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 flex flex-col items-center text-center space-y-3 sm:space-y-4">
           {/* Badge & Genre */}
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-cyan-400 text-black shadow-md">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span className="px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-cyan-400 text-black shadow-md">
               {game.genre}
             </span>
             {game.badge && (
-              <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/5 text-zinc-300 border border-white/10">
+              <span className="px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-white/5 text-zinc-300 border border-white/10">
                 {game.badge}
               </span>
             )}
           </div>
 
           {/* Title & Emoji */}
-          <div className="flex items-center justify-center gap-3">
-            <span className="text-4xl sm:text-5xl drop-shadow-md select-none">{game.thumbnail}</span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
+          <div className="flex items-center justify-center gap-2 sm:gap-3">
+            <span className="text-3xl sm:text-5xl drop-shadow-md select-none">{game.thumbnail}</span>
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
               {game.title}
             </h1>
           </div>
 
           {/* Description */}
-          <p className="text-sm sm:text-base text-zinc-300 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-base text-zinc-300 max-w-2xl leading-relaxed">
             {game.description}
           </p>
         </div>
       </section>
 
       {/* Interactive Game Arena Container */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 w-full">
-        <div className="relative rounded-3xl bg-[#0b0e16] border border-white/15 p-4 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.7)] overflow-hidden">
+      <section className="max-w-4xl mx-auto px-2 sm:px-6 lg:px-8 mt-4 sm:mt-8 w-full">
+        <div className="relative rounded-2xl sm:rounded-3xl bg-[#0b0e16] border border-white/15 p-2 sm:p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.7)] overflow-hidden w-full">
           {/* Playable Client Game */}
           {renderGameComponent()}
         </div>

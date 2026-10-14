@@ -14,28 +14,28 @@ export default function GameCard({ game }: GameCardProps) {
       {/* Thumbnail Gradient Banner with Emoji */}
       <Link
         href={`/games/${game.slug}`}
-        className={`relative block h-52 sm:h-56 w-full overflow-hidden bg-gradient-to-tr ${game.gradient} p-6 flex flex-col items-center justify-center transition-transform duration-500 group-hover:scale-102`}
+        className={`relative block h-44 sm:h-56 w-full overflow-hidden bg-gradient-to-tr ${game.gradient} p-4 sm:p-6 flex flex-col items-center justify-center transition-transform duration-500 group-hover:scale-102`}
       >
         {/* Ambient Dark Gradient Vignette */}
         <div className="absolute inset-0 bg-radial from-transparent via-black/20 to-black/60 pointer-events-none" />
 
         {/* Badge */}
         {game.badge && (
-          <div className="absolute top-3.5 left-3.5">
-            <span className="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-black/70 backdrop-blur-md text-white border border-white/15 shadow-md">
+          <div className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5">
+            <span className="px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-bold tracking-wide uppercase bg-black/70 backdrop-blur-md text-white border border-white/15 shadow-md">
               {game.badge}
             </span>
           </div>
         )}
 
         {/* Playable Indicator */}
-        <div className="absolute top-3.5 right-3.5 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/75 backdrop-blur-md border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+        <div className="absolute top-3 right-3 sm:top-3.5 sm:right-3.5 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/75 backdrop-blur-md border border-emerald-500/30 text-emerald-400 text-[11px] sm:text-xs font-bold">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span>Playable</span>
         </div>
 
         {/* Large Emoji / Icon Thumbnail */}
-        <div className="relative text-6xl sm:text-7xl transform transition-transform duration-500 group-hover:scale-115 drop-shadow-2xl select-none">
+        <div className="relative text-5xl sm:text-7xl transform transition-transform duration-500 group-hover:scale-115 drop-shadow-2xl select-none">
           {game.thumbnail}
         </div>
 
@@ -46,8 +46,8 @@ export default function GameCard({ game }: GameCardProps) {
       </Link>
 
       {/* Card Content Area */}
-      <div className="p-5 flex flex-col flex-1 justify-between space-y-4">
-        <div className="space-y-2.5">
+      <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between space-y-4">
+        <div className="space-y-2">
           {/* Genre */}
           <div className="flex items-center justify-between text-xs">
             <span className="font-semibold text-cyan-400 uppercase tracking-wider text-[11px]">
@@ -57,14 +57,14 @@ export default function GameCard({ game }: GameCardProps) {
           </div>
 
           {/* Title */}
-          <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+          <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
             <Link href={`/games/${game.slug}`}>
               {game.title}
             </Link>
           </h3>
 
           {/* Description */}
-          <p className="text-sm text-zinc-400 leading-relaxed line-clamp-2">
+          <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed line-clamp-2">
             {game.description}
           </p>
         </div>
@@ -75,10 +75,10 @@ export default function GameCard({ game }: GameCardProps) {
             Free to Play
           </span>
 
-          {/* Action Link */}
+          {/* Action Link (at least 44px touch target) */}
           <Link
             href={`/games/${game.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 group-hover:translate-x-1 transition-all"
+            className="inline-flex items-center gap-1.5 min-h-[44px] px-2 text-xs font-bold text-cyan-400 hover:text-cyan-300 group-hover:translate-x-1 transition-all"
           >
             <span>Play Now</span>
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

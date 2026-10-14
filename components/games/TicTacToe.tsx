@@ -182,15 +182,15 @@ export default function TicTacToe() {
   }, [handleClick, restartRound]);
 
   return (
-    <div className="flex flex-col items-center max-w-lg mx-auto p-4 sm:p-6 w-full">
+    <div className="flex flex-col items-center max-w-lg mx-auto p-2 sm:p-6 w-full">
       {/* Mode Selector */}
-      <div className="flex items-center gap-2 mb-6 p-1 rounded-xl bg-[#121622] border border-white/10">
+      <div className="flex items-center gap-2 mb-4 p-1 rounded-xl bg-[#121622] border border-white/10 w-full sm:w-auto">
         <button
           onClick={() => {
             setMode("ai");
             restartRound();
           }}
-          className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+          className={`flex-1 sm:flex-none px-4 py-2.5 min-h-[44px] rounded-lg text-xs font-bold transition-all flex items-center justify-center cursor-pointer ${
             mode === "ai"
               ? "bg-cyan-500 text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]"
               : "text-zinc-400 hover:text-white"
@@ -203,7 +203,7 @@ export default function TicTacToe() {
             setMode("pvp");
             restartRound();
           }}
-          className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+          className={`flex-1 sm:flex-none px-4 py-2.5 min-h-[44px] rounded-lg text-xs font-bold transition-all flex items-center justify-center cursor-pointer ${
             mode === "pvp"
               ? "bg-purple-500 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]"
               : "text-zinc-400 hover:text-white"
@@ -213,50 +213,70 @@ export default function TicTacToe() {
         </button>
       </div>
 
-      {/* Scoreboard Display */}
-      <div className="grid grid-cols-3 gap-3 w-full mb-6">
-        <div className={`p-3.5 rounded-xl border text-center transition-all ${
+      {/* Scoreboard Display - ABOVE BOARD */}
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 w-full mb-3 sm:mb-4">
+        <div className={`p-2.5 sm:p-3.5 rounded-xl border text-center transition-all ${
           isXNext && !winResult
             ? "bg-cyan-950/40 border-cyan-400 shadow-[0_0_15px_rgba(0,240,255,0.2)]"
             : "bg-[#11141e] border-white/10"
         }`}>
-          <div className="text-[11px] font-bold text-cyan-400 uppercase tracking-wider">
+          <div className="text-[10px] sm:text-[11px] font-bold text-cyan-400 uppercase tracking-wider">
             {mode === "ai" ? "Player (X)" : "Player X"}
           </div>
-          <div className="text-2xl font-black text-white font-mono mt-0.5">{scores.x}</div>
+          <div className="text-xl sm:text-2xl font-black text-white font-mono mt-0.5">{scores.x}</div>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-[#11141e] border border-white/10 text-center">
-          <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">Ties</div>
-          <div className="text-2xl font-black text-zinc-300 font-mono mt-0.5">{scores.ties}</div>
+        <div className="p-2.5 sm:p-3.5 rounded-xl bg-[#11141e] border border-white/10 text-center">
+          <div className="text-[10px] sm:text-[11px] font-bold text-zinc-400 uppercase tracking-wider">Ties</div>
+          <div className="text-xl sm:text-2xl font-black text-zinc-300 font-mono mt-0.5">{scores.ties}</div>
         </div>
 
-        <div className={`p-3.5 rounded-xl border text-center transition-all ${
+        <div className={`p-2.5 sm:p-3.5 rounded-xl border text-center transition-all ${
           !isXNext && !winResult
             ? "bg-rose-950/40 border-rose-400 shadow-[0_0_15px_rgba(244,63,94,0.2)]"
             : "bg-[#11141e] border-white/10"
         }`}>
-          <div className="text-[11px] font-bold text-rose-400 uppercase tracking-wider">
-            {mode === "ai" ? "Cyber AI (O)" : "Player O"}
+          <div className="text-[10px] sm:text-[11px] font-bold text-rose-400 uppercase tracking-wider">
+            {mode === "ai" ? "Cyber AI" : "Player O"}
           </div>
-          <div className="text-2xl font-black text-white font-mono mt-0.5">{scores.o}</div>
+          <div className="text-xl sm:text-2xl font-black text-white font-mono mt-0.5">{scores.o}</div>
         </div>
       </div>
 
+      {/* Restart & Reset Buttons - ABOVE BOARD */}
+      <div className="flex items-center gap-2 sm:gap-3 mb-4 w-full">
+        <button
+          onClick={restartRound}
+          className="flex-1 min-h-[44px] py-2.5 px-3 sm:px-4 rounded-xl font-bold text-xs sm:text-sm bg-cyan-400 hover:bg-cyan-300 text-black shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span>Restart Round (R)</span>
+        </button>
+
+        <button
+          onClick={resetScores}
+          className="min-h-[44px] py-2.5 px-3 sm:px-4 rounded-xl font-semibold text-xs text-zinc-400 hover:text-white bg-[#141824] hover:bg-white/10 border border-white/10 transition-all active:scale-95 cursor-pointer flex items-center justify-center"
+        >
+          Reset Scores
+        </button>
+      </div>
+
       {/* Status Banner */}
-      <div className="mb-6 h-8 flex items-center justify-center text-center">
+      <div className="mb-4 h-8 flex items-center justify-center text-center">
         {winResult ? (
           winResult.winner === "tie" ? (
-            <span className="text-sm font-bold text-yellow-400 uppercase tracking-wider">
+            <span className="text-xs sm:text-sm font-bold text-yellow-400 uppercase tracking-wider">
               🤝 Stalemate! It&apos;s a Draw
             </span>
           ) : (
-            <span className="text-sm font-black text-emerald-400 uppercase tracking-wider animate-pulse">
+            <span className="text-xs sm:text-sm font-black text-emerald-400 uppercase tracking-wider animate-pulse">
               🎉 {winResult.winner === "X" ? (mode === "ai" ? "You Won!" : "Player X Won!") : (mode === "ai" ? "Cyber AI Won!" : "Player O Won!")}
             </span>
           )
         ) : isAiThinking ? (
-          <span className="text-sm font-semibold text-rose-400 animate-pulse flex items-center gap-2">
+          <span className="text-xs sm:text-sm font-semibold text-rose-400 animate-pulse flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
             AI is calculating move...
           </span>
@@ -270,9 +290,12 @@ export default function TicTacToe() {
         )}
       </div>
 
-      {/* 3x3 Game Board */}
-      <div className="relative p-3 rounded-2xl bg-[#0c0f17] border border-white/10 shadow-2xl">
-        <div className="grid grid-cols-3 gap-3 w-64 sm:w-72 h-64 sm:h-72">
+      {/* 3x3 Game Board - Scaled to screen width, aspect-square, touch-action none */}
+      <div
+        className="relative w-full max-w-[360px] aspect-square p-2.5 sm:p-3 rounded-2xl bg-[#0c0f17] border border-white/10 shadow-2xl mx-auto touch-none select-none"
+        style={{ touchAction: "none" }}
+      >
+        <div className="grid grid-cols-3 gap-2 sm:gap-3 w-full h-full aspect-square">
           {board.map((cell, idx) => {
             const isWinningCell = winResult?.combo.includes(idx);
             return (
@@ -281,7 +304,7 @@ export default function TicTacToe() {
                 id={`tictactoe-cell-${idx}`}
                 onClick={() => handleClick(idx)}
                 disabled={Boolean(cell || winResult || isAiThinking)}
-                className={`relative flex items-center justify-center rounded-xl font-mono text-4xl sm:text-5xl font-black transition-all select-none ${
+                className={`relative flex items-center justify-center rounded-xl font-mono text-3xl sm:text-5xl font-black transition-all select-none aspect-square min-h-[44px] min-w-[44px] ${
                   cell === null
                     ? "bg-[#141824] hover:bg-[#1c2233] active:scale-95 cursor-pointer border border-white/5"
                     : isWinningCell
@@ -304,26 +327,6 @@ export default function TicTacToe() {
             );
           })}
         </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex items-center gap-3 mt-8 w-full">
-        <button
-          onClick={restartRound}
-          className="flex-1 py-3 px-4 rounded-xl font-bold text-sm bg-cyan-400 hover:bg-cyan-300 text-black shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:shadow-[0_0_25px_rgba(0,240,255,0.5)] transition-all active:scale-95 flex items-center justify-center gap-2"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          <span>Restart Round (R)</span>
-        </button>
-
-        <button
-          onClick={resetScores}
-          className="py-3 px-4 rounded-xl font-semibold text-xs text-zinc-400 hover:text-white bg-[#141824] hover:bg-white/10 border border-white/10 transition-all"
-        >
-          Reset Scores
-        </button>
       </div>
 
       {/* Control hints */}
