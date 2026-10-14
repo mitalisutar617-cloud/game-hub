@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export",
+  basePath: "/game-hub",
+  assetPrefix: "/game-hub/",
   /* config options here */
   experimental: {
     agentFeedback: true,
@@ -8,6 +11,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
